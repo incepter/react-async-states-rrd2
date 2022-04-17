@@ -4,6 +4,7 @@ import "./styles.css";
 import "antd/dist/antd.css";
 import { getUsers, UsersList } from "./pages/users";
 import { getUser, UserDetails } from "./pages/user-details";
+import { getUserPosts, UserPosts } from "./pages/user-posts";
 
 export default function App() {
   return (
@@ -30,7 +31,19 @@ let routesProp = [
         getPayload: (params) => ({
           id: params.id
         }),
-        producer: getUser
+        producer: getUser,
+        nestedRoutes: [
+          {
+            path: "posts",
+            render: UserPosts,
+            routeProps: { exact: true },
+            getDeps: (params) => [params.id],
+            getPayload: (params) => ({
+              id: params.id
+            }),
+            producer: getUserPosts
+          }
+        ]
       }
     ]
   }

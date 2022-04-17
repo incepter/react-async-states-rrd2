@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Outlet, Link } from "react-router-dom";
 import { Modal } from "antd";
 
 export const UserDetails = ({ state }) => {
@@ -6,7 +6,6 @@ export const UserDetails = ({ state }) => {
   const navigate = useNavigate();
   console.log("UserDetails", status);
 
-  console.log("payload", props?.payload?.id);
   let name = data?.name ?? props?.payload?.id;
   return (
     <Modal
@@ -19,7 +18,14 @@ export const UserDetails = ({ state }) => {
         ? `Error occurred... ${state.data?.toString()}`
         : null}
       {status === "aborted" ? "You aborted" : null}
-      {status === "success" ? <pre>{JSON.stringify(data, null, 4)}</pre> : null}
+      {status === "success" ? (
+        <span>
+          <Link to="posts">posts</Link>
+          <pre>{JSON.stringify(data, null, 4)}</pre>
+        </span>
+      ) : null}
+
+      <Outlet />
     </Modal>
   );
 };
