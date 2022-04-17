@@ -17,9 +17,8 @@ export function RouteComponent({
   path,
   producer,
   children,
-  getPayload = () => {},
-  fallback = null,
-  getDeps = () => []
+  getDeps = () => [],
+  getPayload = () => {}
 }) {
   const params = useParams();
 
