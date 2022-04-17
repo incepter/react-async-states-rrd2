@@ -1,10 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import { Modal } from "antd";
 
 export const UserPosts = ({ state }) => {
   const { data, status } = state;
   const navigate = useNavigate();
-  console.log("UserPosts", status);
 
   return (
     <span>
@@ -14,7 +12,13 @@ export const UserPosts = ({ state }) => {
         ? `Error occurred... ${state.data?.toString()}`
         : null}
       {status === "aborted" ? "You aborted" : null}
-      {status === "success" ? <pre>{JSON.stringify(data, null, 4)}</pre> : null}
+      {status === "success" ? (
+        <ul>
+          {data.map((p) => (
+            <li key={p.id}>{p.title}</li>
+          ))}
+        </ul>
+      ) : null}
     </span>
   );
 };

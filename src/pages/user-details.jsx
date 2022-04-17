@@ -4,28 +4,37 @@ import { Modal } from "antd";
 export const UserDetails = ({ state }) => {
   const { data, status, props } = state;
   const navigate = useNavigate();
-  console.log("UserDetails", status);
 
   let name = data?.name ?? props?.payload?.id;
   return (
     <Modal
+      width="1000px"
       onCancel={() => navigate("/users")}
       visible
       title={`User ${name} details`}
     >
-      {status === "initial" || status === "pending" ? "Loading..." : null}
-      {status === "error"
-        ? `Error occurred... ${state.data?.toString()}`
-        : null}
-      {status === "aborted" ? "You aborted" : null}
-      {status === "success" ? (
-        <span>
-          <Link to="posts">posts</Link>
-          <pre>{JSON.stringify(data, null, 4)}</pre>
-        </span>
-      ) : null}
-
-      <Outlet />
+      <div style={{ display: "flex" }}>
+        <div>
+          {status === "initial" || status === "pending" ? "Loading..." : null}
+          {status === "error"
+            ? `Error occurred... ${state.data?.toString()}`
+            : null}
+          {status === "aborted" ? "You aborted" : null}
+          {status === "success" ? (
+            <span style={{ display: "flex", flexDirection: "column" }}>
+              <span>Id :{data.id}</span>
+              <span>Name :{data.name}</span>
+              <span>Username :{data.username}</span>
+              <span>Email :{data.email}</span>
+              <hr />
+              <Link to="posts">User {data.username} posts</Link>
+            </span>
+          ) : null}
+        </div>
+        <div>
+          <Outlet />
+        </div>
+      </div>
     </Modal>
   );
 };

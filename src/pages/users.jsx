@@ -4,7 +4,6 @@ export function UsersList(props) {
   const {
     state: { data, status }
   } = props;
-  console.log("Users", status);
   return (
     <>
       {status === "pending" || status === "initial" ? (
@@ -24,7 +23,6 @@ export function UsersList(props) {
   );
 }
 export function UsersFallback({ state }) {
-  console.log("UsersFallback", state.status);
   switch (state.status) {
     case "pending":
       return <span>loading...</span>;
